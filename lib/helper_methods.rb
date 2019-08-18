@@ -53,9 +53,13 @@ class HelperMethods
 		if !File.exist?('key_id')
 			setupClient
 		end
+
 		@kid = File.read 'key_id'
 		@client = Acme::Client.new(private_key: private_key, directory: 'https://acme-staging-v02.api.letsencrypt.org/directory', kid: @kid)
+
 		@order = @client.new_order(identifiers: ['amahi.linksam.tk'])
+		@order = @client.new_order(identifiers: [@subdomain_name + "." + @domain_name])
+
 		@authorization = @order.authorizations.first
 		@dns_challenge = @authorization.dns
 	end
@@ -154,24 +158,18 @@ class HelperMethods
 	end
 
 	def self.generateCertificate(params)
-		#find if account private key file exist true then continue
-		#else generate new file
-		sub_dom_name = params[:hda_name]
-		dom_name = params[:domain]
+		#find if account private key file exist true then continue else generate new file
+		@subdomain_name = params[:hda_name]
+		@domain_name = params[:domain]
 
-		@subdomain_name = sub_dom_name
-		@domain_name = dom_name
-		puts(@subdom_name)
-		puts(@dom_name)
-
-		#initiateGeneration
-		#initiateChallenge
-		#addDNSRecord
-		#verifyDNSEntry
-		#completeChallenge
-		#downloadCertificate
-		#cleanupDNSEntry
-		#certificateDispatch
+		initiateGeneration
+		initiateChallenge
+		addDNSRecord
+		verifyDNSEntry
+		completeChallenge
+		downloadCertificate
+		cleanupDNSEntry
+		# certificateDispatch
 
 		return true
 	end

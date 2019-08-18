@@ -2,16 +2,11 @@ require 'cloudflare'
 require 'openssl'
 
 class HelperMethods
-	def self.status
-		return "generated succesfully"
-	end
-
 	def self.statusCertificate
 		#check in db
 		#if exist return date of generation and date of maturity
 		
 		#if does not exist in db return status unavailable
-
 	end
 
 	def self.generatePKey
@@ -158,13 +153,17 @@ class HelperMethods
 		generateCertificate
 	end
 
-	def self.generateCertificate(sub_dom_name ,dom_name)
+	def self.generateCertificate(params)
 		#find if account private key file exist true then continue
 		#else generate new file
+		sub_dom_name = params[:hda_name]
+		dom_name = params[:domain]
+
 		@subdomain_name = sub_dom_name
 		@domain_name = dom_name
 		puts(@subdom_name)
 		puts(@dom_name)
+
 		#initiateGeneration
 		#initiateChallenge
 		#addDNSRecord
@@ -173,5 +172,7 @@ class HelperMethods
 		#downloadCertificate
 		#cleanupDNSEntry
 		#certificateDispatch
+
+		return true
 	end
 end

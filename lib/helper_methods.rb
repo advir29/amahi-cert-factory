@@ -2,16 +2,11 @@ require 'cloudflare'
 require 'openssl'
 
 class HelperMethods
-	def self.status
-		return "generated succesfully"
-	end
-
 	def self.statusCertificate
 		#check in db
 		#if exist return date of generation and date of maturity
 		
 		#if does not exist in db return status unavailable
-
 	end
 
 	def self.generatePKey
@@ -58,9 +53,10 @@ class HelperMethods
 		if !File.exist?('key_id')
 			setupClient
 		end
+
 		@kid = File.read 'key_id'
 		@client = Acme::Client.new(private_key: private_key, directory: 'https://acme-staging-v02.api.letsencrypt.org/directory', kid: @kid)
-		@order = @client.new_order(identifiers: ['amahi.linksam.tk'])
+		@order = @client.new_order(identifiers: [@subdomain_name + "." + @domain_name])
 		@authorization = @order.authorizations.first
 		@dns_challenge = @authorization.dns
 	end
@@ -125,7 +121,8 @@ class HelperMethods
   			@dns_challenge.reload
 		end
 		cert = @order.certificate # => PEM-formatted certificate
-		open 'cert.pem', 'w' do |io|
+		file_name = @subdomain_name+"_"+Time.now().to_s+"_cert.pem"
+		open file_name, 'w' do |io|
 			io.write cert
 		end	  
 	end
@@ -158,20 +155,20 @@ class HelperMethods
 		generateCertificate
 	end
 
-	def self.generateCertificate(sub_dom_name ,dom_name)
-		#find if account private key file exist true then continue
-		#else generate new file
-		@subdomain_name = sub_dom_name
-		@domain_name = dom_name
-		puts(@subdom_name)
-		puts(@dom_name)
-		#initiateGeneration
-		#initiateChallenge
-		#addDNSRecord
-		#verifyDNSEntry
-		#completeChallenge
-		#downloadCertificate
-		#cleanupDNSEntry
-		#certificateDispatch
+	def self.generateCertificate(params)
+		#find if account private key file exist true then continue else generate new file
+		@subdomain_name = params[:hda_name]
+		@domain_name = params[:domain]
+
+		initiateGeneration
+		initiateChallenge
+		addDNSRecord
+		verifyDNSEntry
+		completeChallenge
+		downloadCertificate
+		cleanupDNSEntry
+		# certificateDispatch
+
+		return true
 	end
 end

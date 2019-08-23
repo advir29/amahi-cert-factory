@@ -7,7 +7,7 @@ module Api
                 render :json => {success: true, last_generated_at: "16 september 2019 12:00:01", expiry_date: "8 december 2019 11:59:00"}
               else
                 render :json => {success: false, last_generated_at: "16 september 2019 12:00:01", expiry_date: "8 december 2019 11:59:00"}
-              end
+              end 
             end
 
             def regenerate_certificate

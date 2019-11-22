@@ -6,4 +6,5 @@ Rails.application.routes.draw do
       delete "certi/delete" => "lets_encrypts#delete_certificate"
     end
   end
+  match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
 end

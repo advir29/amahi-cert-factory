@@ -40,7 +40,7 @@ class HelperMethods
 		private_key = decryptPKey
 		client = Acme::Client.new(private_key: private_key, directory: 'https://acme-staging-v02.api.letsencrypt.org/directory')
 		# mail id to get certificate expiry alert etc.
-		account = client.new_account(contact: 'mailto:linkaditya29@gmail.com', terms_of_service_agreed: true)
+		account = client.new_account(contact: 'mailto:encryptlets01@gmail.com', terms_of_service_agreed: true)
 		# return kid
 		key_id = account.kid
 		open 'key_id', 'w' do |io|
@@ -77,7 +77,7 @@ class HelperMethods
 
 		# cloudflare credentials
 		#registered email with cloudflare
-		@email = ''
+		@email = 'encryptlets01@gmail.com'
 		# global api key
 		@key = ''
 
@@ -92,7 +92,7 @@ class HelperMethods
 
 	def self.verifyDNSEntry
 		#dig -t txt @challenge_name.@sudomain.@domain
-		#if if found valid value then return true else wait
+		#if found valid value then return true else wait
 		cmd = "dig -t txt #{@challenge_name}.#{@subdomain_name}.#{@domain_name} +short"
 		value = `#{cmd}`
 		while value == ""
@@ -125,7 +125,7 @@ class HelperMethods
 		open file_name, 'w' do |io|
 			io.write cert
 		end	  
-	end
+	end 
 
 	def self.cleanupDNSEntry
 		@record = "#{@challenge_name}.#{@subdomain_name}.#{@domain_name}"

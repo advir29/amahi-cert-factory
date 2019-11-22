@@ -18,6 +18,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'acme-client'
 gem 'cloudflare'
 gem 'openssl'
+gem 'delayed_job_active_record'
+gem 'delayed_job_web'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

@@ -38,9 +38,9 @@ class HelperMethods
 	
 	def self.setupClient
 		private_key = decryptPKey
-		client = Acme::Client.new(private_key: private_key, directory: 'https://acme-staging-v02.api.letsencrypt.org/directory')
+		client = Acme::Client.new(private_key: private_key, directory: 'https://acme-v02.api.letsencrypt.org/directory')
 		# mail id to get certificate expiry alert etc.
-		account = client.new_account(contact: 'mailto:encryptlets01@gmail.com', terms_of_service_agreed: true)
+		account = client.new_account(contact: 'mailto:', terms_of_service_agreed: true)
 		# return kid
 		key_id = account.kid
 		open 'key_id', 'w' do |io|
@@ -55,7 +55,7 @@ class HelperMethods
 		end
 
 		@kid = File.read 'key_id'
-		@client = Acme::Client.new(private_key: private_key, directory: 'https://acme-staging-v02.api.letsencrypt.org/directory', kid: @kid)
+		@client = Acme::Client.new(private_key: private_key, directory: 'https://acme-v02.api.letsencrypt.org/directory', kid: @kid)
 		@order = @client.new_order(identifiers: [@subdomain_name + "." + @domain_name])
 		@authorization = @order.authorizations.first
 		@dns_challenge = @authorization.dns
@@ -77,7 +77,7 @@ class HelperMethods
 
 		# cloudflare credentials
 		#registered email with cloudflare
-		@email = 'encryptlets01@gmail.com'
+		@email = ''
 		# global api key
 		@key = ''
 
@@ -146,7 +146,7 @@ class HelperMethods
 	def self.revokeCertificate
 		private_key = decryptPKey
 		cert_key = File.read 'cert.pem'
-		client = Acme::Client.new(private_key: private_key, directory: 'https://acme-staging-v02.api.letsencrypt.org/directory')
+		client = Acme::Client.new(private_key: private_key, directory: 'https://acme-v02.api.letsencrypt.org/directory')
 		client.revoke(certificate: cert_key)
 	end
 

@@ -15,7 +15,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'bootsnap', '>= 1.1.0', require: false
 
-gem 'acme-client'
+gem 'acme-client', '>=2.0.5'
 gem 'cloudflare'
 gem 'openssl'
 gem 'delayed_job_active_record'

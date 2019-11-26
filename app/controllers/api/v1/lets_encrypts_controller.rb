@@ -2,7 +2,7 @@ module Api
     module V1
         class LetsEncryptsController < ApplicationController
             def generate_certificate
-              success = HelperMethods.generateCertificate(generate_certificate_params)
+              success = HelperMethods.delay.generateCertificate(generate_certificate_params)
               if success
                 render :json => {success: true, last_generated_at: "16 september 2019 12:00:01", expiry_date: "8 december 2019 11:59:00"}
               else

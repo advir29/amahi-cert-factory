@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    acme-client (2.0.3)
+    acme-client (2.0.5)
       faraday (~> 0.9, >= 0.9.1)
     actioncable (5.2.3)
       actionpack (= 5.2.3)
@@ -106,7 +106,7 @@ GEM
       sinatra (>= 1.4.4)
     erubi (1.8.0)
     execjs (2.7.0)
-    faraday (0.15.4)
+    faraday (0.17.0)
       multipart-post (>= 1.2, < 3)
     ffi (1.11.1)
     ffi (1.11.1-x64-mingw32)
@@ -253,7 +253,7 @@ PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
-  acme-client
+  acme-client (>= 2.0.5)
   bootsnap (>= 1.1.0)
   byebug
   capybara (>= 2.15)

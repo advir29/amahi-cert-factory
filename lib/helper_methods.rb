@@ -40,7 +40,7 @@ class HelperMethods
 		private_key = decryptPKey
 		client = Acme::Client.new(private_key: private_key, directory: 'https://acme-staging-v02.api.letsencrypt.org/directory')
 		# mail id to get certificate expiry alert etc.
-		account = client.new_account(contact: 'mailto:linkaditya29@gmail.com', terms_of_service_agreed: true)
+		account = client.new_account(contact: 'mailto:', terms_of_service_agreed: true)
 		# return kid
 		key_id = account.kid
 		open 'key_id', 'w' do |io|
@@ -65,6 +65,7 @@ class HelperMethods
 		@challenge_name = @dns_challenge.record_name # => '_acme-challenge'
 		@challenge_record_type = @dns_challenge.record_type # => 'TXT'
 		@challenge_key = @dns_challenge.record_content # => 'HRV3PS5sRDyV-ous4HJk4z24s5JjmUTjcCaUjFt28-8'
+		puts(@challenge_key)
 	end
 
 	def self.addDNSRecord
@@ -92,7 +93,7 @@ class HelperMethods
 
 	def self.verifyDNSEntry
 		#dig -t txt @challenge_name.@sudomain.@domain
-		#if if found valid value then return true else wait
+		#if found valid value then return true else wait
 		cmd = "dig -t txt #{@challenge_name}.#{@subdomain_name}.#{@domain_name} +short"
 		value = `#{cmd}`
 		while value == ""
